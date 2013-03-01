@@ -16,6 +16,8 @@ class User < ActiveRecord::Base
 
   before_save { self.email.downcase! }
 
+  before_save :create_remember_token
+
 
   #Validate name entered by user during signup.
   #name must be present and 50 chars or less.
@@ -36,5 +38,14 @@ class User < ActiveRecord::Base
 
   validates :password_confirmation, :presence => true
 
+
+
+  private
+
+    def create_remember_token
+
+      self.remember_token = SecureRandom.hex
+
+    end
   
 end
